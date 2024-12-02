@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url("../assets/fonts/Montserrat-VariableFont_wght.ttf");
+}
+
+/* Global */
+* {
+  font-family: 'Montserrat';
+}
+
+h1, h2, h3, h4, h5, h6, p, a, td {
+  @apply text-grey-700;
+}
+
+text {
+ @apply font-semibold;
+}
+
+.popup-narrow::after {
+  content: "";
+  position: absolute;
+  transform: rotate(-45deg);
+  top: -6px;
+  right: 20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: white;
+}

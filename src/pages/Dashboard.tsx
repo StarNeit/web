@@ -1,14 +1,32 @@
-import React, { ReactElement } from 'react';
-import { StatisticCard, Table } from '@components/widgets';
+import React, { ReactElement, useCallback, useState } from 'react';
+import {
+  ConfirmDialog,
+  EditPractiseDialog,
+  StatisticCard,
+  Table
+} from '@components/widgets';
 import { ReactComponent as ArrowRightIcon } from '@assets/icons/arrow_right.svg';
 import { CircleProgress } from '@components/common';
-import { STATISTICS, PRACTICES_COLUMNS, PRACTICES } from '../constants';
+import { STATISTICS, PRACTICES_COLUMNS, PRACTICES } from '@constants';
+import { Link } from 'react-router-dom';
 
 const Dashboard = (): ReactElement => {
+  const [isOpenDeleteConfirmDialog, setIsOpenDeleteConfirmDialog] =
+    useState<boolean>(false);
+  const [isOpenEditDialog, setIsOpenEditDialog] = useState<boolean>(false);
+
+  const handleConfirmDialog = useCallback((status: boolean) => {
+    setIsOpenDeleteConfirmDialog(status);
+  }, []);
+
+  const handleEditDialog = useCallback((status: boolean) => {
+    setIsOpenEditDialog(status);
+  }, []);
+
   return (
     <>
       <div className="mb-6 md:mb-10">
-        <h2 className="font-bold text-lg md:text-xl mb-1 md:mb-2">
+        <h2 className="font-bold text-lg md:text-xl mb-1 md:mb-3">
           Welcome Andrew!
         </h2>
         <p className="text-sm md:text-sm font-light">
@@ -59,13 +77,29 @@ const Dashboard = (): ReactElement => {
         <div className="px-6 py-4 md:p-6">
           <h5 className="text-lg font-bold">Newest Practises</h5>
         </div>
-        <Table columns={PRACTICES_COLUMNS} data={PRACTICES} />
-        <div className="border-t border-t-grey-300 p-4 flex justify-end">
-          <div className="flex items-center gap-2 text-primary-600">
-            <span className="text-xs font-semibold">See All</span>
+        <Table
+          columns={PRACTICES_COLUMNS}
+          data={PRACTICES}
+          onEdit={() => handleEditDialog(true)}
+          onDelete={() => handleConfirmDialog(true)}
+        />
+        <div className="border-t border-t-grey-300 px-4 pt-5 pb-6 flex justify-end">
+          <Link
+            to="/practises"
+            className="flex items-center gap-2 text-primary-600 hover:opacity-80">
+            <span className="text-sm font-semibold">See All</span>
             <ArrowRightIcon />
-          </div>
+          </Link>
         </div>
+
+        <ConfirmDialog
+          isOpen={isOpenDeleteConfirmDialog}
+          onClose={() => handleConfirmDialog(false)}
+        />
+        <EditPractiseDialog
+          isOpen={isOpenEditDialog}
+          onClose={() => handleEditDialog(false)}
+        />
       </div>
     </>
   );

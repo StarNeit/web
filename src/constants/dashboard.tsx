@@ -9,6 +9,7 @@ import { ReactComponent as TreatmentIcon } from '@assets/icons/statistic_treatme
 import { ReactComponent as ConsentIcon } from '@assets/icons/statistic_consents.svg';
 import { ReactComponent as FactIcon } from '@assets/icons/statistic_fact.svg';
 import React from 'react';
+import { Notification, User } from '@types';
 
 export const STATISTICS: StatisticCardProps[] = [
   {
@@ -100,3 +101,26 @@ export const PRACTICES = [
     status: 'active'
   }
 ];
+
+export const NOTIFICATIONS: Notification[] = [
+  {
+    id: '1',
+    image: '/user.png',
+    title: 'New Registration',
+    description: 'Alex Fredricks',
+    date: '07 Oct 2022'
+  },
+  {
+    id: '2',
+    image: '/user.png',
+    title: 'New Constent Added',
+    description: 'Blake Robertson',
+    date: '07 Oct 2022'
+  }
+];
+
+export const USER: User = {
+  id: '1',
+  name: 'Adrian Stefan',
+  email: 'adrian@mrfertility.co.za'
+};

@@ -1,9 +1,20 @@
 import { ReactComponent as BellIcon } from '@assets/icons/bell.svg';
-import { ReactComponent as ClockIcon } from '@assets/icons/clock_outline.svg';
-import { ReactComponent as TrashIcon } from '@assets/icons/trash.svg';
 import { Popup } from '@components/common';
+import React from 'react';
+import { NotificationItem } from '@components/widgets/NotificationItem';
+import { Notification } from '@types';
 
-export const NotificationDropdownMenu = () => {
+type Props = {
+  messages: Notification[];
+  onRemoveMessage?: (id: string) => void;
+  onClear?: () => void;
+};
+
+export const NotificationDropdownMenu: React.FC<Props> = ({
+  messages,
+  onRemoveMessage,
+  onClear
+}) => {
   return (
     <Popup
       anchor={
@@ -14,37 +25,34 @@ export const NotificationDropdownMenu = () => {
           </span>
         </div>
       }>
-      <div className="px-5 py-4 min-w-[300px] md:min-w-[360px]">
+      <div className="px-5 py-[18px] min-w-[300px] md:min-w-[360px]">
         <p className="text-sm md:text-base font-semibold">Notifications</p>
         <p className="text-grey-600 text-xs md:text-sm font-light">
-          You have 2 unread messages
+          {!messages.length
+            ? 'No unread messages'
+            : `You have ${messages.length} unread messages`}
         </p>
       </div>
-      <div>
-        <div className="flex items-center border-t border-t-grey-300 gap-4 px-4 py-3 md:p-4">
-          <img className="w-10 h-10 rounded-full" src="/user.png" alt="user" />
-          <div className="flex-1">
-            <h5 className="text-sm font-semibold">New Registration</h5>
-            <div className="text-xs md:text-sm font-light mb-1">
-              Alex Fredricks
-            </div>
-            <div className="flex items-center gap-1 text-grey-400">
-              <ClockIcon className="w-3 md:w-auto" />
-              <span className="text-[10px] md:text-xs font-light">
-                07 Oct 2022
-              </span>
-            </div>
+      {!!messages.length && (
+        <>
+          <div>
+            {messages.map((message) => (
+              <NotificationItem
+                key={message.id}
+                data={message}
+                onRemove={() => onRemoveMessage?.(message.id)}
+              />
+            ))}
           </div>
-          <span>
-            <TrashIcon className="text-grey-400 cursor-pointer hover:opacity-80" />
-          </span>
-        </div>
-      </div>
-      <div className="flex justify-center py-[14px] border-t border-t-grey-300">
-        <span className="text-xs md:text-sm font-semibold text-primary cursor-pointer hover:opacity-80">
-          Clear All
-        </span>
-      </div>
+          <div className="flex justify-center py-[14px] border-t border-t-grey-300">
+            <span
+              className="text-xs md:text-sm font-semibold text-primary cursor-pointer hover:opacity-80"
+              onClick={() => onClear?.()}>
+              Clear All
+            </span>
+          </div>
+        </>
+      )}
     </Popup>
   );
 };

@@ -1,16 +1,20 @@
 import { Switch } from '@headlessui/react';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 type Props = {
-  enabled: boolean;
-  onChange: (value: boolean) => void;
+  enabled?: boolean;
+  onChange?: (value: boolean) => void;
 };
 
-export const Toggle: React.FC<Props> = ({ enabled, onChange }) => {
+export const Toggle: React.FC<Props> = ({ enabled = false, onChange }) => {
+  const handleChangeStatus = useCallback((checked: boolean) => {
+    onChange?.(checked);
+  }, []);
+
   return (
     <Switch
       checked={enabled}
-      onChange={onChange}
+      onChange={handleChangeStatus}
       className="group relative flex h-[14px] w-[34px] cursor-pointer rounded-full bg-grey-500/80 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-primary/[32%]">
       <span
         aria-hidden="true"

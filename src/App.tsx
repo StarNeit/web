@@ -1,6 +1,14 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import Dashboard from '@pages/Dashboard';
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  Navigate
+} from 'react-router-dom';
 import { Header, Sidebar } from '@components/layout';
+import Dashboard from '@pages/Dashboard';
+import NotFound from '@pages/NotFound';
+import Profile from '@pages/Profile';
+import ManagePractises from '@pages/ManagePractises';
 
 function App() {
   return (
@@ -12,6 +20,10 @@ function App() {
           <div className="px-6 sm:px-10 py-6 sm:py-8">
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/practises" element={<ManagePractises />} />
+              <Route path="/" element={<Navigate to="/dashboard" />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
         </div>

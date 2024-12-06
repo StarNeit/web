@@ -12,9 +12,16 @@ export type TableColumn = {
 export type TableProps = {
   columns: TableColumn[];
   data: Array<Record<string, any>>;
+  onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
 };
 
-export const Table: React.FC<TableProps> = ({ columns, data }) => {
+export const Table: React.FC<TableProps> = ({
+  columns,
+  data,
+  onDelete,
+  onEdit
+}) => {
   return (
     <div className="px-2 overflow-auto">
       <table className="w-full hidden md:table">
@@ -23,7 +30,7 @@ export const Table: React.FC<TableProps> = ({ columns, data }) => {
             {columns.map((column, index) => (
               <th
                 key={index}
-                className={clsx('bg-grey-200 px-6 py-4 text-left', {
+                className={clsx('bg-grey-200 px-4 py-[18px] text-left', {
                   'rounded-l-lg': index === 0,
                   'rounded-r-lg text-right': index === columns.length - 1
                 })}>
@@ -40,10 +47,14 @@ export const Table: React.FC<TableProps> = ({ columns, data }) => {
                   return (
                     <td
                       key={columnIndex}
-                      className="px-6 py-4 text-left text-sm">
+                      className="px-4 py-4 text-left text-sm">
                       <div className="flex justify-end gap-3 text-primary-500">
-                        <EditIcon className="cursor-pointer hover:opacity-80" />
-                        <TrashIcon className="cursor-pointer hover:opacity-80" />
+                        <span onClick={() => onEdit(row.id)}>
+                          <EditIcon className="cursor-pointer hover:opacity-80" />
+                        </span>
+                        <span onClick={() => onDelete(row.id)}>
+                          <TrashIcon className="cursor-pointer hover:opacity-80" />
+                        </span>
                       </div>
                     </td>
                   );
@@ -51,7 +62,7 @@ export const Table: React.FC<TableProps> = ({ columns, data }) => {
                   return (
                     <td
                       key={columnIndex}
-                      className="px-6 py-4 text-left text-sm whitespace-nowrap">
+                      className="px-4 py-[26px] text-left text-sm whitespace-nowrap">
                       {column.render?.() ?? row[column.field]}
                     </td>
                   );
@@ -73,8 +84,12 @@ export const Table: React.FC<TableProps> = ({ columns, data }) => {
                   <div
                     key={columnIndex}
                     className="flex justify-end gap-3 text-primary-500">
-                    <EditIcon />
-                    <TrashIcon />
+                    <span onClick={() => onEdit(item.id)}>
+                      <EditIcon className="cursor-pointer hover:opacity-80" />
+                    </span>
+                    <span onClick={() => onDelete(item.id)}>
+                      <TrashIcon className="cursor-pointer hover:opacity-80" />
+                    </span>
                   </div>
                 );
               } else {

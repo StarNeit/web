@@ -10,10 +10,10 @@ const pathColorVariants = {
 
 type Props = {
   variant: 'warning' | 'success' | 'info';
-  value: number;
+  value?: number;
 };
 
-export const CircleProgress: React.FC<Props> = ({ variant, value }) => {
+export const CircleProgress: React.FC<Props> = ({ variant, value = 0 }) => {
   return (
     <div className="w-16 md:w-20 h-16 md:h-20">
       <CircularProgressbar

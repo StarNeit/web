@@ -15,10 +15,10 @@ export const StatisticCard: React.FC<StatisticCardProps> = ({
   value
 }) => {
   return (
-    <div className="shadow-paper rounded-2xl px-6 py-4 md:p-6 flex items-center">
+    <div className="shadow-paper rounded-2xl px-6 py-4 md:pt-6 md:pb-9 flex items-center">
       <div className="flex-1">
-        <h5 className="text-sm font-semibold mb-2">{title}</h5>
-        <div className="flex items-center gap-2 mb-1">
+        <h5 className="text-sm font-semibold mb-2.5">{title}</h5>
+        <div className="flex items-center gap-2 mb-2.5">
           <span className="w-6 h-6 bg-success/[16%] flex items-center justify-center rounded-full">
             <ChatUpIcon />
           </span>

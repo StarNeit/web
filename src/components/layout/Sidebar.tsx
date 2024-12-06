@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'usehooks-ts';
 import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
-import { SIDEBAR_ROUTES } from '../../constants';
+import { SIDEBAR_ROUTES } from '@constants';
 
 export const Sidebar = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -14,7 +14,6 @@ export const Sidebar = () => {
 
   const location = useLocation();
 
-  console.log(isTablet);
   const isActivePath = (pathname: string) => {
     return location.pathname.startsWith(pathname);
   };
@@ -22,7 +21,7 @@ export const Sidebar = () => {
   return (
     <div
       className={clsx(
-        'bg-white w-[280px] border-r border-r-gray-200 fixed top-0 bottom-0 left-0 transition-transform ease-in',
+        'bg-white w-[280px] border-r border-r-gray-200 fixed top-0 bottom-0 left-0 transition-transform ease-in z-10',
         {
           '-translate-x-0': !isTablet || (isTablet && expanded),
           'drop-shadow-popover': isTablet && expanded,
@@ -41,11 +40,11 @@ export const Sidebar = () => {
         </span>
       </div>
 
-      <div className="h-[76px] px-5 flex items-center">
+      <div className="h-[76px] px-5 flex items-center pt-1">
         <LogoIcon />
       </div>
 
-      <div className="p-5 flex flex-col gap-1">
+      <div className="p-5 px-4 flex flex-col gap-1">
         {SIDEBAR_ROUTES.map((route, index) => (
           <Link
             key={index}
